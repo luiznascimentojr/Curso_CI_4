@@ -16,14 +16,14 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-2
      - name: Obtendo arquivo da tarefa
-       run: aws ecs describe-task-definition --task-definition Task-API-GO-Luiz --query taskDefinition > task-definition.json
+       run: aws ecs describe-task-definition --task-definition GO-API-TASK --query taskDefinition > task-definition.json
 
      - name: Fill in the new image ID in the Amazon ECS task definition
        id: task-def
        uses: aws-actions/amazon-ecs-render-task-definition@v1
        with:
           task-definition: task-definition.json
-          container-name: GO
+          container-name: GO-Container
           image: luiznascimentojr/go_ci:${{github.run_number}}
           environment-variables: |
              HOST=${{ secrets.DBHOST }}
@@ -37,6 +37,6 @@ jobs:
        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
        with:
             task-definition: ${{ steps.task-def.outputs.task-definition }}
-            service: Servico_API-Go
+            service: Service-API-GO
             cluster: API-Go
             wait-for-service-stability: true
