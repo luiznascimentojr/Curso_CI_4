@@ -24,7 +24,7 @@ jobs:
        with:
           task-definition: task-definition.json
           container-name: GO
-          image: luiznascimentojr/go_ci:projeto_remoto
+          image: luiznascimentojr/go_ci:${{github.run_number}}
           environment-variables: |
              HOST=${{ secrets.DBHOST }}
              USER=${{ secrets.DBUSER }}
